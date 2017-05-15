@@ -18,5 +18,8 @@
   "homepage": "https://github.com/careerfairsystems/arkad-search#readme",
   "devDependencies": {
     "express": "^4.15.2"
+  },
+  "dependencies": {
+    "pg": "^6.1.5"
   }
 }
