@@ -1,0 +1,19 @@
+{
+  "name": "arkad-search",
+  "version": "1.0.0",
+  "description": "A system handling information about Arkad and, like Google Search, gives a prioritised response when queried.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/careerfairsystems/arkad-search.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/careerfairsystems/arkad-search/issues"
+  },
+  "homepage": "https://github.com/careerfairsystems/arkad-search#readme"
+}
