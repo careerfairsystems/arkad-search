@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/careerfairsystems/arkad-search/issues"
   },
-  "homepage": "https://github.com/careerfairsystems/arkad-search#readme"
+  "homepage": "https://github.com/careerfairsystems/arkad-search#readme",
+  "devDependencies": {
+    "express": "^4.15.2"
+  }
 }
