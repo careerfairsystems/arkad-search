@@ -18,30 +18,34 @@ var jtest = {
 	}
 	]
 };
+var text = "klädsel";
+search(text);
+function search(text) {
 
-var text = "lunch dresscode";
+text: text;
 var searchText = text.split(" ");
+var event;
+var appearences = 0;
+var index = null;
 console.log(text);
 searchText.forEach(function(entry){
 for(var i = 0; i < jtest.events.length; i++){
-	var event = jtest.events[i];
-	if(event.namn === entry){
-		//egentligen return info
+	event = jtest.events[i];
+	if(event.namn.toLowerCase() === entry.toLowerCase()){
+		//return event.info
 		console.log(event.info);
 		break;
 		}
 	}
 });
 
-var appearences = 0;
-var index = null;
 for(var i = 0; i < jtest.events.length; i++){
-	var event = jtest.events[i];
+	event = jtest.events[i];
 	var textComp = event.info.split(" ");
 	var k = 0;
 	searchText.forEach(function(entry){
 		for(var j = 0; j<textComp.length; j++){
-			if(entry === textComp[j]){
+			if(textComp[j].toLowerCase().indexOf(entry.toLowerCase()) != -1){
 				k++;
 			}
 		}
@@ -55,6 +59,8 @@ for(var i = 0; i < jtest.events.length; i++){
 if(index === null){
 	console.log("Inga sökresultat. ");
 }else{
-var event = jtest.events[index];
-console.log(appearences + " " + index + event.info);
+event = jtest.events[index];
+//return event.info;
+console.log(appearences + " " + index + " " + event.info);
 }
+};
