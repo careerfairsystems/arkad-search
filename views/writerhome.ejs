@@ -4,9 +4,6 @@
     <title>Koordinator webUI</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css" src = "alert.css"></style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <meta charset="utf-8">
     <meta name=viewport content="width= device-width">
 
@@ -20,15 +17,23 @@
             </div>
               <form action = "/search" method="post" name="myform" style="margin-top:30px;">
                 <h3>Lägg till data</h3>
+
                 <div class="form-group">
-                    <input type="text" name = "title" class="form-control" placeholder="title"></input>
+                    <input type="text" name = "name" class="form-control" placeholder="title"></input>
                 </div>
+
+                <div class="form-group">
+                    <input type="time" name = "time" class="form-control" placeholder="time"></input>
+                </div>
+
+                <div class="form-group">
+                <input type="date" name = date class = "form-control" placeholder="date"></input>
+                </div>
+
                 <div class ="form-group">
                 <textarea name = "info" placeholder="Write the shit you want" class = "form-control"></textarea>
                 </div>
-                <div class="form-group">
-                <input type="text" name = time class = "form-control" placeholder="time"></input>
-                </div>
+                
                 <button type="submit" name = "push" class="btn btn-primary" >Post</button>
             </form> 
         </div>
