@@ -32,6 +32,10 @@ app.post('/search', function(req, res) {
         })
           
         res.render('writerhome')
+    db.read_everything_from_table(function(err, res){
+    console.log(res[res.length-1].name)
+})
+
     } else {
         res.render('writerhome')
     }

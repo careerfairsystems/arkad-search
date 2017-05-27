@@ -1,37 +1,20 @@
-var jtest = {
+var db = require("./database");
+var text = "hejsan best";
 
-	"events": [
-	{
-	"namn":"lunch",
-	"tid":"12.00",
-	"info":"lunchen börjar 12 och slutar 15. Meny finns på hemsidan."
-	},
-	{
-	"namn":"bankett",
-	"tid":"20.00",
-	"info":"dresscode: högtidsklädsel."
-	},
-	{
-	"namn":"företag",
-	"tid":null,
-	"info":"ARKAD har många företag, i år kommer över en miljon och det är kul"
-	}
-	]
-};
-var text = "klädsel";
-search(text);
-function search(text) {
+db.read_everything_from_table(function(err, res){
+
+function search(text, res) {
 
 text: text;
 var searchText = text.split(" ");
 var event;
 var appearences = 0;
 var index = null;
-console.log(text);
+
 searchText.forEach(function(entry){
-for(var i = 0; i < jtest.events.length; i++){
-	event = jtest.events[i];
-	if(event.namn.toLowerCase() === entry.toLowerCase()){
+for(var i = 0; i <  res.rows.length; i++){
+	event =  res.rows[i];
+	if(event.name.toLowerCase() === entry.toLowerCase()){
 		//return event.info
 		console.log(event.info);
 		break;
@@ -39,8 +22,8 @@ for(var i = 0; i < jtest.events.length; i++){
 	}
 });
 
-for(var i = 0; i < jtest.events.length; i++){
-	event = jtest.events[i];
+for(var i = 0; i <  res.rows.length; i++){
+	event =  res.rows[i];
 	var textComp = event.info.split(" ");
 	var k = 0;
 	searchText.forEach(function(entry){
@@ -59,8 +42,13 @@ for(var i = 0; i < jtest.events.length; i++){
 if(index === null){
 	console.log("Inga sökresultat. ");
 }else{
-event = jtest.events[index];
+event = res.rows[index];
 //return event.info;
 console.log(appearences + " " + index + " " + event.info);
 }
-};
+
+}
+
+search(text, res)
+
+});
