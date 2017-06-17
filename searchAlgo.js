@@ -24,23 +24,9 @@ db.read_everything_from_table(function(err, res){
 
 function search(text, res) {
 var searchText = text.split(" ");
-var event;
-
-//Jämför sökord med eventnamn - ska bytas mot "type" längre fram
-searchText.forEach(function(entry){
-for(var i = 0; i <  res.rows.length; i++){
-	event =  res.rows[i];
-	if(event.name.toLowerCase() === entry.toLowerCase()){
-		//return event.info
-		console.log(event.info);
-		break;
-		}
-	}
-});
 
 //itererar över strängen med sökord och jämför varje objekt med varje ord i event-infon
 //sparar antal matchningar i variablen k
-
 res.rows.forEach(function(event){
 	var textComp = event.info.split(" ");
 	var k = 0;
@@ -75,10 +61,10 @@ function sortResult(k, event){
 			});
 
 			//sätter rätt index och värde på minAppearences
-			jsonResult.result.forEach(function(entry){
-				if(entry.appearences < minAppearences){
-					minIndex = entry.index;
-					minAppearences= entry.appearences;
+	jsonResult.result.forEach(function(entry){
+			if(entry.appearences < minAppearences){
+				minIndex = entry.index;
+				minAppearences= entry.appearences;
 				}
 			});
 }
