@@ -55,20 +55,6 @@ app.post('/test',function(req,res){
   })
 });
 
-
-//Used for testing/example
-
-db.insert_search_into_database("Test", "20:32", "1920-12-02", "THE BESt EVER", function (err, result) {
-  if (err) return err;
-  return result;
-})
-
-db.read_everything_from_table(function (err, result) {
-  if (err) return err;
-  return result;
-})
-
-
-app.listen(3001)
-
-console.log("App listening on port " + 3001);
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
