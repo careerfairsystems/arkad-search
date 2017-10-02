@@ -1,0 +1,63 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+:root {
+  font-size: 16px;
+}
+
+/* still need some rem/em converting*/
+/*Shine*/
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+button#activate {
+  background: #eaeaea;
+  border: none;
+  color: #d46777;
+  padding: 15px 35px 15px 35px;
+  font-size: 1.7rem;
+  text-transform: uppercase;
+  border-radius: 40px;
+  box-shadow: 3px 3px 8px #772732;
+  font-weight: 600;
+  outline: none;
+}
+button#activate:hover {
+  background: #f5f5f5;
+}
+
+#noteWrap {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background: #eaeaea;
+  color: #c55465;
+  width: 16rem;
+  height: 8rem;
+  padding: 10px;
+  font-weight: 600;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 3px 3px 8px #772732;
+}
+#noteWrap:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-right: 15px solid #eaeaea;
+  position: absolute;
+  top: 35px;
+  right: 255px;
+}
+#noteWrap p {
+  font-size: 1.2rem;
+  text-align: center;
+}

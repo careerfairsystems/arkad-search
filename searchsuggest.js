@@ -62,7 +62,7 @@ var search = null;
   var fuse = new Fuse(dex, options);
 
   $searchbar.keyup(function() {
-    var search = fuse.search('lunch');
+    var search = fuse.search($searchbar.val());
     var $res = $('#results');
     var check = 0;
     $res.empty();
