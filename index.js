@@ -5,6 +5,7 @@ var app = express()
 var fs = require('fs')
 var db = require("./database");
 var Fuse = require('fuse.js');
+var fuseOptions = require('./fuse-option.json')
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -41,34 +42,16 @@ app.post('/search', function(req, res) {
 app.get('/database',function(req,res){
   db.read_everything_from_table(function (err, result) {
   })
-});
+})
 
 
 
 
-app.get('/test',function(req,res){
+app.post('/test',function(req,res){
   db.read_everything_from_table(function (err, result) {
     if (err) return err;
-    var options = {
-      shouldSort: true,
-      threshold: 0.5,
-      minMatchCharLength: 0,
-      keys: [{
-        name: 'name',
-        weight: 0.75
-      }, {
-        name: 'time',
-        weight: 0.5
-      }, {
-        name: 'date',
-        weight: 0.3
-      }, {
-        name: 'info',
-        weight: 0.3
-      }]
-    };
-    var fuse = new Fuse(result, options);
-    res.json(fuse.search('k3win'));
+    var fuse = new Fuse(result, fuseOptions);
+    res.json(fuse.search(req.body.search));
   })
 });
 
@@ -87,3 +70,5 @@ db.read_everything_from_table(function (err, result) {
 
 
 app.listen(3001)
+
+console.log("App listening on port " + 3001);
