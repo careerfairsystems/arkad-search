@@ -5,7 +5,11 @@ var app = express()
 var fs = require('fs')
 var db = require("./database");
 var Fuse = require('fuse.js');
-var fuseOptions = require('./fuse-option.json')
+var fuseOptions = require('./fuse-option.json');
+
+
+
+
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,13 +49,12 @@ app.get('/database',function(req,res){
 })
 
 
-
-
-app.post('/test',function(req,res){
+app.get('/arkad-search/:searchTerm',function(req,res){
+  
   db.read_everything_from_table(function (err, result) {
     if (err) return err;
     var fuse = new Fuse(result, fuseOptions);
-    res.json(fuse.search(req.body.search));
+    res.json(fuse.search(req.params.searchTerm));
   })
 });
 
