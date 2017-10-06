@@ -4,3 +4,8 @@ CREATE TABLE IF NOT EXISTS data(
     date    date,
     info    TEXT
 );
+
+CREATE TABLE IF  NOT EXISTS users(
+    username    VARCHAR(255)    UNIQUE,
+    password    VARCHAR(1000)   UNIQUE
+);

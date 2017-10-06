@@ -1,14 +1,31 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var app = express()
-
 var fs = require('fs')
 var db = require("./database");
 var Fuse = require('fuse.js');
 var fuseOptions = require('./fuse-option.json');
+var session = require('express-session');
+var bcrypt = require('bcrypt');
 
+const saltRounds = 10;
+ 
+// Set up an Express session,
+app.use( session({
+    secret            : 'super secret key',
+    resave            : false,
+    saveUninitialized : true
+}));
+ 
 
-
+// Login middleware for /search
+var login = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        res.redirect('/login');
+    } else {
+        next();
+    }
+}
 
 
 
@@ -18,11 +35,73 @@ app.use(bodyParser.json());
 
 app.set('view engine', 'ejs')
 
-app.get('/search', function(req, res) {
+// Render login form if not loggedin, else redirect to search
+app.get('/login', (req, res) => {
+    if (!req.session.isLoggedIn) {
+        res.render('login');
+    } else {
+        res.redirect('/search');
+    }
+})
+
+
+app.get('/', (req, res) => {
+    res.redirect('/login');
+})
+
+app.post('/logout', (req,res) => {
+    req.session.destroy((err) => {
+        if (err) return res.render('error')
+        res.redirect('/login');
+    })
+})
+
+app.get('/create_account', (reg,res) => {
+    res.render('create_admin');
+})
+
+app.post('/create_account', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    // Hashing and salting password
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) return res.render('error')
+        db.add_user(username, hash, (err, result) => {
+            if (err) return res.render('error');
+            res.redirect('/login');
+        })
+    });
+})
+
+app.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    db.get_user(username, (err, result) => {
+        if (err) return res.render('error');
+        if (result.rows.length != 0) {
+            const hash = result.rows[0].password;
+            bcrypt.compare(password, hash, (err, match) => {
+                if (err) return res.render('error');
+                if (match) {
+                    req.session.regenerate((err) => {
+                        req.session.isLoggedIn = true;
+                        res.redirect('/search');
+                    });
+                } else {
+                    res.redirect('/login');
+                }
+            })
+        } else {
+            res.redirect('/login');
+        }
+    })
+})
+
+app.get('/search', login, function(req, res) {
     res.render('writerhome')
 })
 
-app.post('/search', function(req, res) {
+app.post('/search', login, function(req, res) {
 
     if (req.body.title != "") {
         var createEvent = {
@@ -32,11 +111,9 @@ app.post('/search', function(req, res) {
             "Info": req.body.info
         }
         db.insert_search_into_database(createEvent.Name,createEvent.Time,createEvent.Date,createEvent.Info, function(err, result){
-            if(err) return err;
-            return result;
+            if(err) return res.render('error');
+            return res.render('writerhome')
         })
-
-        res.render('writerhome')
     } else {
         res.render('writerhome')
     }
@@ -49,10 +126,10 @@ app.get('/database',function(req,res){
 })
 
 
-app.get('/arkad-search/:searchTerm',function(req,res){
+app.get('/arkad-search/:searchTerm', function(req,res){
   
   db.read_everything_from_table(function (err, result) {
-    if (err) return err;
+    if(err) return res.render('error');
     var fuse = new Fuse(result, fuseOptions);
     res.json(fuse.search(req.params.searchTerm));
   })
