@@ -3,8 +3,8 @@ var pg = require('pg')
 var database = {
 
     insert_search_into_database: function (name, time, date, info, callback) {
-        var user = "osseman"
-        var pw = ""
+        const user = process.env.PSQLUSER
+        const pw = process.env.PSQLPW
         const connectionString = 'postgres://'+user+':'+pw+'@localhost:5432/arkad-search';
         var client = new pg.Client(connectionString);
         client.connect(function (err) {
@@ -21,8 +21,8 @@ var database = {
         })
     },
     get_user: function(username, callback) {
-        var user = "osseman"
-        var pw = ""
+        const user = process.env.PSQLUSER
+        const pw = process.env.PSQLPW
         const connectionString = 'postgres://'+user+':'+pw+'@localhost:5432/arkad-search';
         var client = new pg.Client(connectionString);
         client.connect(function (err) {
@@ -40,8 +40,8 @@ var database = {
     },
 
     add_user: function(username, password, callback) {
-        const user = "osseman"
-        const pw = ""
+        const user = process.env.PSQLUSER
+        const pw = process.env.PSQLPW
         const connectionString = 'postgres://'+user+':'+pw+'@localhost:5432/arkad-search';
         const client = new pg.Client(connectionString);
         client.connect(function (err) {

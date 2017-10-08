@@ -9,14 +9,14 @@ var session = require('express-session');
 var bcrypt = require('bcrypt');
 
 const saltRounds = 10;
- 
+
 // Set up an Express session,
 app.use( session({
     secret            : 'super secret key',
     resave            : false,
     saveUninitialized : true
 }));
- 
+
 
 // Login middleware for /search
 var login = (req, res, next) => {
@@ -120,14 +120,20 @@ app.post('/search', login, function(req, res) {
 
 })
 
-app.get('/database',function(req,res){
+app.get('/database', login,function(req,res){
   db.read_everything_from_table(function (err, result) {
+    var dbcontent = result;
+    res.render('database_content',{
+        dbcontent: dbcontent
+    });
   })
+
+
 })
 
 
 app.get('/arkad-search/:searchTerm', function(req,res){
-  
+
   db.read_everything_from_table(function (err, result) {
     if(err) return res.render('error');
     var fuse = new Fuse(result, fuseOptions);
