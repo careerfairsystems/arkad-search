@@ -1,8 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
 :root {
   font-size: 16px;
+  position: relative;
 }
 
+:host {
+}
 /* still need some rem/em converting*/
 /*Shine*/
 
@@ -60,4 +63,25 @@ button#activate:hover {
 #noteWrap p {
   font-size: 1.2rem;
   text-align: center;
+}
+
+.add-button {
+  position: absolute;
+  font-size: 40px;
+  top: 40px;
+  right: 40px;
+  color: #222;
+}
+
+.close-button {
+  position: absolute;
+  font-size: 40px;
+  top: 40px;
+  left: 40px;
+  color: #222;
+}
+
+.add-button:hover,
+.close-button:hover {
+  color: #444;
 }

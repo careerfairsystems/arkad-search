@@ -10,6 +10,8 @@ var bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
+app.use(express.static(__dirname + '/views'));
+
 // Set up an Express session,
 app.use( session({
     secret            : 'super secret key',
@@ -18,10 +20,10 @@ app.use( session({
 }));
 
 
-// Login middleware for /search
+// Login middleware for /contet
 var login = (req, res, next) => {
     if (!req.session.isLoggedIn) {
-        res.redirect('/login');
+        res.redirect('/content');
     } else {
         next();
     }
@@ -35,12 +37,12 @@ app.use(bodyParser.json());
 
 app.set('view engine', 'ejs')
 
-// Render login form if not loggedin, else redirect to search
+// Render login form if not loggedin, else redirect to content
 app.get('/login', (req, res) => {
     if (!req.session.isLoggedIn) {
         res.render('login');
     } else {
-        res.redirect('/search');
+        res.redirect('/content');
     }
 })
 
@@ -85,7 +87,7 @@ app.post('/login', (req, res) => {
                 if (match) {
                     req.session.regenerate((err) => {
                         req.session.isLoggedIn = true;
-                        res.redirect('/search');
+                        res.redirect('/content');
                     });
                 } else {
                     res.redirect('/login');
@@ -120,7 +122,7 @@ app.post('/search', login, function(req, res) {
 
 })
 
-app.get('/database', login,function(req,res){
+app.get('/content', login,function(req,res){
   db.read_everything_from_table(function (err, result) {
     var dbcontent = result;
     res.render('database_content',{
