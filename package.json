@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/careerfairsystems/arkad-search#readme",
   "devDependencies": {
-    "express": "^4.15.2"
+    "express": "^4.16.2"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
