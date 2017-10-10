@@ -4,7 +4,7 @@ var database = {
 
     insert_search_into_database: function (name, time, date, info, callback) {
         let connectionString = "";
-        if (app.settings.env == "production") {
+        if (process.env.NODE_ENV == "production") {
             connectionString = process.env.DATABASE_URL;
         } else {
             const user = process.env.PSQLUSER;
@@ -27,7 +27,7 @@ var database = {
     },
     get_user: function(username, callback) {
         let connectionString = "";
-        if (app.settings.env == "production") {
+        if (process.env.NODE_ENV == "production") {
             connectionString = process.env.DATABASE_URL;
         } else {
             const user = process.env.PSQLUSER;
@@ -51,7 +51,7 @@ var database = {
 
     add_user: function(username, password, callback) {
         let connectionString = "";
-        if (app.settings.env == "production") {
+        if (process.env.NODE_ENV == "production") {
             connectionString = process.env.DATABASE_URL;
         } else {
             const user = process.env.PSQLUSER;
@@ -74,7 +74,7 @@ var database = {
 
     read_everything_from_table: function (callback) {
         let connectionString = "";
-        if (app.settings.env == "production") {
+        if (process.env.NODE_ENV == "production") {
             connectionString = process.env.DATABASE_URL;
         } else {
             const user = process.env.PSQLUSER;
@@ -95,7 +95,7 @@ var database = {
 
     read_names_from_table: function (callback) {
         let connectionString = "";
-        if (app.settings.env == "production") {
+        if (process.env.NODE_ENV == "production") {
             connectionString = process.env.DATABASE_URL;
         } else {
             const user = process.env.PSQLUSER;
