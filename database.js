@@ -1,5 +1,4 @@
 var pg = require('pg')
-var config = require('./config');
 
 var database = {
 
