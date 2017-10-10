@@ -3,7 +3,14 @@ var pg = require('pg')
 var database = {
 
     insert_search_into_database: function (name, time, date, info, callback) {
-        const connectionString = process.env.DATABASE_URL;
+        let connectionString = "";
+        if (app.settings.env == "production") {
+            connectionString = process.env.DATABASE_URL;
+        } else {
+            const user = process.env.PSQLUSER;
+            const pw = process.env.PSQLPW;
+            connectionString = 'postgres://'+user+':'+pw+'@localhost:5432/arkad-search';
+        }
         var client = new pg.Client(connectionString);
         client.connect(function (err) {
             if (err) return callback(err, null);
@@ -19,7 +26,14 @@ var database = {
         })
     },
     get_user: function(username, callback) {
-        const connectionString = process.env.DATABASE_URL;
+        let connectionString = "";
+        if (app.settings.env == "production") {
+            connectionString = process.env.DATABASE_URL;
+        } else {
+            const user = process.env.PSQLUSER;
+            const pw = process.env.PSQLPW;
+            connectionString = 'postgres://'+user+':'+pw+'@localhost:5432/arkad-search';
+        }        
         var client = new pg.Client(connectionString);
         client.connect(function (err) {
             if (err) return callback(err, null);
@@ -36,7 +50,14 @@ var database = {
     },
 
     add_user: function(username, password, callback) {
-        const connectionString = process.env.DATABASE_URL;
+        let connectionString = "";
+        if (app.settings.env == "production") {
+            connectionString = process.env.DATABASE_URL;
+        } else {
+            const user = process.env.PSQLUSER;
+            const pw = process.env.PSQLPW;
+            connectionString = 'postgres://'+user+':'+pw+'@localhost:5432/arkad-search';
+        }
         const client = new pg.Client(connectionString);
         client.connect(function (err) {
             if (err) return callback(err, null);
@@ -52,7 +73,14 @@ var database = {
     },
 
     read_everything_from_table: function (callback) {
-        const connectionString = process.env.DATABASE_URL;
+        let connectionString = "";
+        if (app.settings.env == "production") {
+            connectionString = process.env.DATABASE_URL;
+        } else {
+            const user = process.env.PSQLUSER;
+            const pw = process.env.PSQLPW;
+            connectionString = 'postgres://'+user+':'+pw+'@localhost:5432/arkad-search';
+        }
         var client = new pg.Client(connectionString);
         client.connect(function (err) {
             if (err) return callback(err, null);
@@ -66,7 +94,14 @@ var database = {
     },
 
     read_names_from_table: function (callback) {
-        const connectionString = process.env.DATABASE_URL;
+        let connectionString = "";
+        if (app.settings.env == "production") {
+            connectionString = process.env.DATABASE_URL;
+        } else {
+            const user = process.env.PSQLUSER;
+            const pw = process.env.PSQLPW;
+            connectionString = 'postgres://'+user+':'+pw+'@localhost:5432/arkad-search';
+        }
         var client = new pg.Client(connectionString);
         client.connect(function (err) {
             if (err) return callback(err, null);
