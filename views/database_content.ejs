@@ -24,21 +24,23 @@
                         <th>Info:</th>
                     </tr>
                 </thead>
-                <% for(var i=0; i < dbcontent.length; i++) { %>
-                <tr>
-                    <td><%= dbcontent[i].name %></td>
-                    <td><%= dbcontent[i].time %></td>
-                    <td>
-                        <textarea readonly class="form-control" rows="1" id="textArea" style = "resize:none"><%= dbcontent[i].info %></textarea>
-                    </td>
-                    <td class="entry-buttons">
-                        <a class="btn btn-primary">edit</a>
-                        <form class="form-style" method="post" action="/delete/<%= dbcontent[i].id %>">
-                            <button type="submit" class="btn btn-danger">delete</button>
-                        </form>
-                    </td>
-                </tr>
-                <% } %>
+                <% if (dbcontent) {
+                    for (var i=0; i < dbcontent.length; i++) { %>
+                    <tr>
+                        <td><%= dbcontent[i].name %></td>
+                        <td><%= dbcontent[i].time %></td>
+                        <td>
+                            <textarea readonly class="form-control" rows="1" id="textArea" style = "resize:none"><%= dbcontent[i].info %></textarea>
+                        </td>
+                        <td class="entry-buttons">
+                            <a class="btn btn-primary">edit</a>
+                            <form class="form-style" method="post" action="/delete/<%= dbcontent[i].id %>">
+                                <button type="submit" class="btn btn-danger">delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }
+                } %>
             </table>
             <form action='/logout' method='post'>
                 <button type="submit" class="btn btn-danger"> Logout </button>
