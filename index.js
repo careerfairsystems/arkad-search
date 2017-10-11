@@ -23,7 +23,7 @@ app.use( session({
 // Login middleware for /contet
 var login = (req, res, next) => {
     if (!req.session.isLoggedIn) {
-        res.redirect('/content');
+        res.redirect('/login');
     } else {
         next();
     }
@@ -142,6 +142,12 @@ app.get('/arkad-search/:searchTerm', function(req,res){
         res.json(fuse.search(req.params.searchTerm));
     })
 });
+
+
+// This needs to be last! 
+app.use((req, res) => {
+    res.render('404');
+})
 
 app.listen(process.env.PORT || 3000, function(){
     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
