@@ -28,8 +28,15 @@
                 <tr>
                     <td><%= dbcontent[i].name %></td>
                     <td><%= dbcontent[i].time %></td>
-                    <td> <textarea readonly class="form-control" rows="1" id="textArea" style = "resize:none"><%= dbcontent[i].info %></textarea></td>
-                    <td> <a class="btn btn-primary">edit</a> <a class="btn btn-danger">delete</a> </td>
+                    <td>
+                        <textarea readonly class="form-control" rows="1" id="textArea" style = "resize:none"><%= dbcontent[i].info %></textarea>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary">edit</a>
+                        <form method="post" action="/delete/<%= dbcontent[i].id %>">
+                            <button type="submit" class="btn btn-danger">delete</button>
+                        </form>
+                    </td>
                 </tr>
                 <% } %>
             </table>
@@ -39,5 +46,4 @@
         </div>
     </div>
 </body>
-<script src="generatetable.js"></script>
 </html>

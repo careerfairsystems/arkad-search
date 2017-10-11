@@ -29,11 +29,8 @@ var login = (req, res, next) => {
     }
 }
 
-
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 
 app.set('view engine', 'ejs')
 
@@ -45,7 +42,6 @@ app.get('/login', (req, res) => {
         res.redirect('/content');
     }
 })
-
 
 app.get('/', (req, res) => {
     res.redirect('/login');
@@ -119,30 +115,34 @@ app.post('/search', login, function(req, res) {
     } else {
         res.render('writerhome')
     }
-
 })
 
 app.get('/content', login,function(req,res){
-  db.read_everything_from_table(function (err, result) {
-    var dbcontent = result;
-    res.render('database_content',{
-        dbcontent: dbcontent
+    db.read_everything_from_table(function (err, result) {
+        var dbcontent = result;
+        res.render('database_content',{
+            dbcontent: dbcontent
+        });
+    })
+})
+
+app.post('/delete/:id', login, function(req, res) {
+    db.delete_search(req.params.id, function(err, result) {
+        if (err) return res.render('error');
+        return res.redirect('/content');
     });
-  })
-
-
 })
 
 
 app.get('/arkad-search/:searchTerm', function(req,res){
 
-  db.read_everything_from_table(function (err, result) {
-    if(err) return res.render('error');
-    var fuse = new Fuse(result, fuseOptions);
-    res.json(fuse.search(req.params.searchTerm));
-  })
+    db.read_everything_from_table(function (err, result) {
+        if(err) return res.render('error');
+        var fuse = new Fuse(result, fuseOptions);
+        res.json(fuse.search(req.params.searchTerm));
+    })
 });
 
 app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });

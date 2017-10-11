@@ -30,6 +30,22 @@ var database = {
             })
         })
     },
+
+    delete_search: function (id, callback) {
+        this.setup_connection(client => {
+            client.connect(function (err) {
+                if (err) return callback(err, null);
+                // execute a query on our database
+                client.query('DELETE FROM data WHERE id = $1',
+                    [id]
+                    , function (err, result) {
+                        if (err) return callback(err, null);
+                        return callback(null, result);
+                    })
+            })
+        })
+    },
+
     get_user: function(username, callback) {
         this.setup_connection(client => {
         client.connect(function (err) {
