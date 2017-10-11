@@ -31,9 +31,9 @@
                     <td>
                         <textarea readonly class="form-control" rows="1" id="textArea" style = "resize:none"><%= dbcontent[i].info %></textarea>
                     </td>
-                    <td>
+                    <td class="entry-buttons">
                         <a class="btn btn-primary">edit</a>
-                        <form method="post" action="/delete/<%= dbcontent[i].id %>">
+                        <form class="form-style" method="post" action="/delete/<%= dbcontent[i].id %>">
                             <button type="submit" class="btn btn-danger">delete</button>
                         </form>
                     </td>

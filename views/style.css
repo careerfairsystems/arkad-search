@@ -85,3 +85,14 @@ button#activate:hover {
 .close-button:hover {
   color: #444;
 }
+
+.entry-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-style {
+  margin: 0;
+  padding: 0;
+}
