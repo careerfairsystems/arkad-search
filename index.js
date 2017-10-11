@@ -126,6 +126,28 @@ app.get('/content', login,function(req,res){
     })
 })
 
+app.get('/edit/:id', login, function(req, res) {
+    db.read_entry(req.params.id, function(err, result) {
+        if (err) return res.render('error');
+        return res.render('edit_post', {
+            entry: result.rows[0]
+        });
+    });
+})
+
+app.post('/edit/:id', login, function(req, res) {
+    db.update_entry({
+        id: req.params.id,
+        name: req.body.name,
+        time: req.body.time,
+        date: req.body.date,
+        info: req.body.info
+     }, function(err, result) {
+        if (err) return res.render('error');
+        return res.redirect('/content');
+    });
+})
+
 app.post('/delete/:id', login, function(req, res) {
     db.delete_search(req.params.id, function(err, result) {
         if (err) return res.render('error');
@@ -135,7 +157,6 @@ app.post('/delete/:id', login, function(req, res) {
 
 
 app.get('/arkad-search/:searchTerm', function(req,res){
-
     db.read_everything_from_table(function (err, result) {
         if(err) return res.render('error');
         var fuse = new Fuse(result, fuseOptions);

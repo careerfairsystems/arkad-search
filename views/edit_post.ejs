@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>Koordinator webUI</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css"/>
+    <meta charset="utf-8">
+    <meta name=viewport content="width= device-width">
+</head>
+<body>
+    <a class="close-button" href="./../content"><i class="fa fa-times"></i></a>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="page-header">
+                <h1 style = "margin-top:150px;">Edit <%= entry.name %></h1>
+            </div>
+            <form action = "/edit/<%= entry.id %>" method="post" name="myform" style="margin-top:30px;">
+
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="title" value="<%= entry.name %>"></input>
+                </div>
+
+                <div class="form-group">
+                    <input type="time" name="time" class="form-control" placeholder="time" value="<%= entry.time %>"></input>
+                </div>
+
+                <div class="form-group">
+                    <input type="date" name=date class="form-control" placeholder="date" value="<%= entry.date.toISOString().substring(0,10) %>"></input>
+                </div>
+
+                <div class ="form-group">
+                    <textarea name = "info" placeholder="Write the shit you want" class = "form-control"><%= entry.info %></textarea>
+                </div>
+
+                <button type="submit" name = "push" class="btn btn-primary" >Save</button>
+            </form>
+
+            <form action='/logout' method='post'>
+                <button type="submit" class="btn btn-danger"> Logout </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

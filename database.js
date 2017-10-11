@@ -30,6 +30,38 @@ var database = {
             })
         })
     },
+    
+    read_entry: function (id, callback) {
+        this.setup_connection(client => {
+        client.connect(function (err) {
+                if (err) return callback(err, null);
+
+                // execute a query on our database
+                client.query('SELECT * FROM data WHERE id = $1',
+                    [id]
+                    , function (err, result) {
+                    if (err) return callback(err, null);
+                    return callback(null, result)
+                })
+            })
+        })
+    },
+    
+    update_entry: function (ent, callback) {
+        this.setup_connection(client => {
+        client.connect(function (err) {
+                if (err) return callback(err, null);
+                
+                // execute a query on our database
+                client.query('UPDATE data SET name = $1, time = $2, date = $3, info = $4 WHERE id = $5',
+                    [ent.name, ent.time, ent.date, ent.info, ent.id]
+                    , function (err, result) {
+                    if (err) return callback(err, null);
+                    return callback(null, result)
+                })
+            })
+        })
+    },
 
     delete_search: function (id, callback) {
         this.setup_connection(client => {
