@@ -168,6 +168,9 @@ app.get('/arkad-search/:searchTerm', function(req,res){
 app.get('/users', login,function(req,res){
     db.read_users_from_table(function (err, result) {
         var dbusers = result;
+        dbusers.sort(function(a, b) {
+            return a.username > b.username;
+        })
         res.render('database_users',{
             dbusers: dbusers,
             isAdmin: req.session.isAdmin
@@ -187,10 +190,8 @@ app.post('/admin_permission', login, function(req, res){
 })
 
 app.post('/delete_user', login, function(req, res){
-  console.log(req.body.username);
-  db.delete_user(
-  {
-    username: req.body.username
+  db.delete_user({
+      username: req.body.username
   }, function(err, result){
       if (err) return res.render('error');
       return res.json({redirect: '/users'});
