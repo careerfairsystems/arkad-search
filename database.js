@@ -124,6 +124,20 @@ var database = {
         })
     },
 
+    read_users_from_table: function (callback) {
+        this.setup_connection(client => {
+            client.connect(function (err) {
+                if (err) return callback(err, null);
+
+                // execute a query on our database
+                client.query('SELECT username, admin FROM users;', function (err, result) {
+                    if (err) return callback(err, null);
+                    return callback(null, result.rows)
+                })
+            })
+        })
+    },
+
     read_names_from_table: function (callback) {
         this.setup_connection(client => {
             client.connect(function (err) {
@@ -136,8 +150,22 @@ var database = {
                 })
             })
         })
-    }
+    },
 
+    update_admin_permission: function (ent, callback) {
+        this.setup_connection(client => {
+        client.connect(function (err) {
+                if (err) return callback(err, null);
+                // execute a query on our database
+                client.query('UPDATE users SET admin = $2 WHERE username = $1',
+                    [ent.username, ent.admin]
+                    , function (err, result) {
+                    if (err) return callback(err, null);
+                    return callback(null, result)
+                })
+            })
+        })
+    },
 
 };
 

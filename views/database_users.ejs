@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>Koordinator webUI</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style.css"/>
+    <meta charset="utf-8">
+    <meta name=viewport content="width= device-width">
+
+</head>
+<body>
+    <div class="row">
+        <a class="close-button" href="./content"><i class="fa fa-arrow-left"></i></a>
+        <div class="col-md-6 col-md-offset-3">
+            <div class="page-header">
+                <h1 style = "margin-top:150px;">All users</h1>
+            </div>
+            <table class="table table-striped table-hover ">
+                <thead>
+                    <tr>
+                        <th>Username:</th>
+                        <th>Admin:</th>
+                    </tr>
+                </thead>
+                <% if (dbusers) {
+                    for (var i=0; i < dbusers.length; i++) { %>
+                    <tr>
+                        <td><%= dbusers[i].username %></td>
+                        <td>
+                            <form class="form-style" method="post" action="/admin_permission?username=<%= dbusers[i].username %>&admin=<%=!dbusers[i].admin%>">
+                            <% if(dbusers[i].admin) { %>
+                            <button class="btn btn-success">ADMIN</button>
+                            <% } else { %>
+                            <button class="btn btn-default">ADMIN</button>
+                            <% } %></form></td>
+                        <td class="entry-buttons">
+                            <form class="form-style" method="post" action="/delete_user/<%= dbusers[i].username %>">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }
+                } %>
+            </table>
+            <form action='/logout' method='post'>
+                <button type="submit" class="btn btn-danger"> Logout </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

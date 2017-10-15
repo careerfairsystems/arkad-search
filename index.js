@@ -164,8 +164,31 @@ app.get('/arkad-search/:searchTerm', function(req,res){
     })
 });
 
+app.get('/users', login,function(req,res){
+    db.read_users_from_table(function (err, result) {
+        var dbusers = result;
+        res.render('database_users',{
+            dbusers: dbusers
+        });
+    })
+})
 
-// This needs to be last! 
+app.post('/admin_permission', login, function(req, res){
+ console.log("hej");
+ console.log(req.query.username);
+ console.log(req.query.value);
+  db.update_admin_permission(
+    {
+      username: req.query.username,
+      admin: req.query.admin
+    }, function(err, result) {
+        if (err) return res.render('error');
+        return res.redirect('/users');
+    });
+})
+
+
+// This needs to be last!
 app.use((req, res) => {
     res.render('404');
 })
