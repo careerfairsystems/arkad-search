@@ -174,9 +174,6 @@ app.get('/users', login,function(req,res){
 })
 
 app.post('/admin_permission', login, function(req, res){
- console.log("hej");
- console.log(req.query.username);
- console.log(req.query.value);
   db.update_admin_permission(
     {
       username: req.query.username,
@@ -187,6 +184,16 @@ app.post('/admin_permission', login, function(req, res){
     });
 })
 
+app.post('/delete_user', login, function(req, res){
+  console.log(req.body.username);
+  db.delete_user(
+  {
+    username: req.body.username
+  }, function(err, result){
+      if (err) return res.render('error');
+      return res.json({redirect: '/users'});
+  });
+})
 
 // This needs to be last!
 app.use((req, res) => {

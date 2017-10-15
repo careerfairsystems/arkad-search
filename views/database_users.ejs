@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Koordinator webUI</title>
@@ -35,9 +36,7 @@
                             <button class="btn btn-default">ADMIN</button>
                             <% } %></form></td>
                         <td class="entry-buttons">
-                            <form class="form-style" method="post" action="/delete_user/<%= dbusers[i].username %>">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                            <button type="submit" class="btn btn-danger" onclick="confirmation('<%= dbusers[i].username %>')">Delete</button>
                         </td>
                     </tr>
                     <% }
@@ -49,4 +48,23 @@
         </div>
     </div>
 </body>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        function confirmation(name) {
+            if(confirm("Delete user?")){
+                 $.post("/delete_user",
+                {
+                    username: name
+                },
+                function(data, status){
+                    console.log(data);
+                    console.log(status);
+                    if(data.redirect){
+                        window.location.href = data.redirect;
+                     }
+                });
+             }
+        }
+    </script>
 </html>

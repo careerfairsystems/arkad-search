@@ -167,6 +167,21 @@ var database = {
         })
     },
 
+    delete_user: function (ent, callback) {
+        this.setup_connection(client => {
+            client.connect(function (err) {
+                if (err) return callback(err, null);
+                // execute a query on our database
+                client.query('DELETE FROM users WHERE username = $1',
+                    [ent.username]
+                    , function (err, result) {
+                        if (err) return callback(err, null);
+                        return callback(null, result);
+                    })
+            })
+        })
+    },
+
 };
 
 module.exports = database;
