@@ -29,15 +29,23 @@
                     <tr>
                         <td><%= dbusers[i].username %></td>
                         <td>
-                            <form class="form-style" method="post" action="/admin_permission?username=<%= dbusers[i].username %>&admin=<%=!dbusers[i].admin%>">
-                            <% if(dbusers[i].admin) { %>
-                            <button class="btn btn-success">ADMIN</button>
-                            <% } else { %>
-                            <button class="btn btn-default">ADMIN</button>
-                            <% } %></form></td>
+                            <% if(isAdmin) { %>
+                                <form class="form-style" method="post" action="/admin_permission?username=<%= dbusers[i].username %>&admin=<%=!dbusers[i].admin%>">
+                                    <% if(dbusers[i].admin) { %>
+                                        <button class="btn btn-success">ADMIN</button>
+                                    <% } else { %>
+                                        <button class="btn btn-default">ADMIN</button>
+                                    <% } %>
+                                </form>
+                            <% } else if(dbusers[i].admin) {%>
+                                ADMIN
+                            <% } %>
+                        </td>
+                    <% if(isAdmin) { %>
                         <td class="entry-buttons">
                             <button type="submit" class="btn btn-danger" onclick="confirmation('<%= dbusers[i].username %>')">Delete</button>
                         </td>
+                    <% } %>
                     </tr>
                     <% }
                 } %>

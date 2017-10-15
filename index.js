@@ -83,6 +83,7 @@ app.post('/login', (req, res) => {
                 if (match) {
                     req.session.regenerate((err) => {
                         req.session.isLoggedIn = true;
+                        req.session.isAdmin = result.rows[0].admin;
                         res.redirect('/content');
                     });
                 } else {
@@ -168,7 +169,8 @@ app.get('/users', login,function(req,res){
     db.read_users_from_table(function (err, result) {
         var dbusers = result;
         res.render('database_users',{
-            dbusers: dbusers
+            dbusers: dbusers,
+            isAdmin: req.session.isAdmin
         });
     })
 })
