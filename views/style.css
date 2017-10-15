@@ -96,3 +96,7 @@ button#activate:hover {
   margin: 0;
   padding: 0;
 }
+
+.page {
+  text-align: center;
+}
