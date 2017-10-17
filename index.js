@@ -7,7 +7,12 @@ var Fuse = require('fuse.js');
 var fuseOptions = require('./fuse-option.json');
 var session = require('express-session');
 var bcrypt = require('bcrypt');
+var Raven = require('raven');
 
+// Setting up Error Handling
+Raven.config(process.env.SENTRY_DSN).install();
+app.use(Raven.requestHandler());
+app.use(Raven.errorHandler());
 const saltRounds = 10;
 
 app.use(express.static(__dirname + '/views'));
