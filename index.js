@@ -75,11 +75,11 @@ app.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     db.get_user(username, (err, result) => {
-        if (err) return console.log(err); res.render('error');
+        if (err) return res.render('error');
         if (result.rows.length != 0) {
             const hash = result.rows[0].password;
             bcrypt.compare(password, hash, (err, match) => {
-                if (err) return console.log(err); res.render('error');
+                if (err) return res.render('error');
                 if (match) {
                     req.session.regenerate((err) => {
                         req.session.isLoggedIn = true;

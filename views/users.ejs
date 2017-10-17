@@ -76,11 +76,9 @@
                     username: name
                 },
                 function(data, status){
-                    console.log(data);
-                    console.log(status);
                     if(data.redirect){
                         window.location.href = data.redirect;
-                     }
+                    }
                 });
              }
         }

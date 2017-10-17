@@ -6,7 +6,7 @@ var database = {
     setup_connection: function(callback) {
         let connectionString = "";
         if (process.env.NODE_ENV == "production") {
-            connectionString = process.env.URL;
+            connectionString = process.env.DATABASE_URL;
         } else {
             const user = process.env.PSQLUSER;
             const pw = process.env.PSQLPW;
