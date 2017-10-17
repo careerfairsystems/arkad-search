@@ -12,9 +12,10 @@
     <div class="page">
         <div class="nav-container">
             <div class="nav-left-container">
-                <a class="nav-button" href="./../content"><i class="fa fa-arrow-left"></i></a>
+                <a class="nav-button" href="./content"><i class="fa fa-arrow-left"></i></a>
             </div>
             <div class="nav-right-container">
+                <a class="nav-button" href="./users"><i class="fa fa-user"></i></a>
                 <form action='/logout' method='post' style="margin: 0;">
                     <button type="submit" class="nav-button"><i class="fa fa-sign-out"></i></button>
                 </form>
@@ -22,27 +23,28 @@
         </div>
         <div class="col-md-6 col-md-offset-3">
             <div class="page-header">
-                <h1 style = "margin-top:150px;">Edit <%= entry.name %></h1>
+                <h1 style="margin-top:150px;">Create ARKAD seach data</h1>
             </div>
-            <form action = "/edit/<%= entry.id %>" method="post" name="myform" style="margin-top:30px;">
+            <form action="/search" method="post" name="myform" style="margin-top:30px;">
+                <h3>Lägg till data</h3>
 
                 <div class="form-group">
-                    <input type="text" name="name" class="form-control" placeholder="title" value="<%= entry.name %>"></input>
-                </div>
-
-                <div class="form-group">
-                    <input type="time" name="time" class="form-control" placeholder="time" value="<%= entry.time %>"></input>
+                    <input type="text" name="name" class="form-control" placeholder="Title"></input>
                 </div>
 
                 <div class="form-group">
-                    <input type="date" name=date class="form-control" placeholder="date" value="<%= entry.date.toISOString().substring(0,10) %>"></input>
+                    <input type="time" name="time" class="form-control" placeholder="time"></input>
                 </div>
 
-                <div class ="form-group">
-                    <textarea name = "info" placeholder="Write the shit you want" class = "form-control"><%= entry.info %></textarea>
+                <div class="form-group">
+                    <input type="date" name=date class="form-control" placeholder="date"></input>
                 </div>
 
-                <button type="submit" name = "push" class="btn btn-primary" >Save</button>
+                <div class="form-group">
+                    <textarea name="info" placeholder="Description of the event..." class="form-control"></textarea>
+                </div>
+
+                <button type="submit" name="push" class="btn btn-primary">Post</button>
             </form>
         </div>
     </div>
