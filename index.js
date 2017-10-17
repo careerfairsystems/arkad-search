@@ -54,8 +54,8 @@ app.post('/logout', (req,res) => {
     })
 })
 
-app.get('/create_account', (reg,res) => {
-    res.render('create_admin');
+app.get('/create_account', login, (reg,res) => {
+    res.render('create_user');
 })
 
 app.post('/create_account', (req, res) => {
