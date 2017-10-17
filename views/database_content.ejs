@@ -16,6 +16,9 @@
             <div class="nav-right-container">
                 <a class="nav-button" href="./users"><i class="fa fa-user"></i></a>
                 <a class="nav-button" href="./search"><i class="fa fa-plus"></i></a>
+                <form action='/logout' method='post' style="margin: 0;">
+                    <button type="submit" class="nav-button"><i class="fa fa-sign-out"></i></button>
+                </form>
             </div>
         </div>
         <div class="col-md-6 col-md-offset-3">
@@ -50,9 +53,6 @@
                     <% }
                 } %>
             </table>
-            <form action='/logout' method='post'>
-                <button type="submit" class="btn btn-danger"> Logout </button>
-            </form>
         </div>
     </div>
 </body>

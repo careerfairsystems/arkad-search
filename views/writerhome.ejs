@@ -14,7 +14,11 @@
             <div class="nav-left-container">
                 <a class="nav-button" href="./content"><i class="fa fa-arrow-left"></i></a>
             </div>
-            <div class="nav-right-container"></div>
+            <div class="nav-right-container">
+                <form action='/logout' method='post' style="margin: 0;">
+                    <button type="submit" class="nav-button"><i class="fa fa-sign-out"></i></button>
+                </form>
+            </div>
         </div>
         <div class="col-md-6 col-md-offset-3">
             <div class="page-header">
@@ -40,10 +44,6 @@
                 </div>
 
                 <button type="submit" name="push" class="btn btn-primary">Post</button>
-            </form>
-
-            <form action='/logout' method='post'>
-                <button type="submit" class="btn btn-danger"> Logout </button>
             </form>
         </div>
     </div>
