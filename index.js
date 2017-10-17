@@ -97,7 +97,7 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/search', login, function(req, res) {
-    res.render('writerhome')
+    res.render('post_add')
 })
 
 app.post('/search', login, function(req, res) {
@@ -111,17 +111,17 @@ app.post('/search', login, function(req, res) {
         }
         db.insert_search_into_database(createEvent.Name,createEvent.Time,createEvent.Date,createEvent.Info, function(err, result){
             if(err) return res.render('error');
-            return res.render('writerhome')
+            return res.render('post_add')
         })
     } else {
-        res.render('writerhome')
+        res.render('post_add')
     }
 })
 
 app.get('/content', login,function(req,res){
     db.read_everything_from_table(function (err, result) {
         var dbcontent = result;
-        res.render('database_content',{
+        res.render('content',{
             dbcontent: dbcontent
         });
     })
@@ -130,7 +130,7 @@ app.get('/content', login,function(req,res){
 app.get('/edit/:id', login, function(req, res) {
     db.read_entry(req.params.id, function(err, result) {
         if (err) return res.render('error');
-        return res.render('edit_post', {
+        return res.render('post_edit', {
             entry: result.rows[0]
         });
     });
@@ -171,7 +171,7 @@ app.get('/users', login,function(req,res){
         dbusers.sort(function(a, b) {
             return a.username > b.username;
         })
-        res.render('database_users',{
+        res.render('users',{
             dbusers: dbusers,
             isAdmin: req.session.isAdmin
         });
