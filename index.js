@@ -125,6 +125,8 @@ app.post('/search', login, function(req, res) {
 
 app.get('/content', login,function(req,res){
     db.read_everything_from_table(function (err, result) {
+        if (err) return res.render('error');
+
         var dbcontent = result;
         res.render('content',{
             dbcontent: dbcontent
@@ -164,7 +166,7 @@ app.post('/delete/:id', login, function(req, res) {
 
 app.get('/arkad-search/:searchTerm', function(req,res){
     db.read_everything_from_table(function (err, result) {
-        if(err) return res.render('error');
+        if (err) return res.render('error');
         var fuse = new Fuse(result, fuseOptions);
         res.json(fuse.search(req.params.searchTerm));
     })
@@ -172,6 +174,7 @@ app.get('/arkad-search/:searchTerm', function(req,res){
 
 app.get('/users', login,function(req,res){
     db.read_users_from_table(function (err, result) {
+        if (err) return res.render('error');
         var dbusers = result;
         dbusers.sort(function(a, b) {
             return a.username > b.username;
