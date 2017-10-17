@@ -100,9 +100,34 @@ button#activate:hover {
   text-decoration: none !important;
 }
 
-.nav-button:hover,
 .nav-button:hover {
   color: #ccc;
+}
+
+.header-container {
+  display: flex;
+  margin-top: 150px;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-container h1 {
+  margin: 0;
+}
+
+.add-button {
+  background-color: transparent;
+  border: none;
+  color: #232323;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  text-decoration: none !important;
+  font-size: 40px;
+}
+
+.add-button:hover {
+  color: #454545;
 }
 
 .entry-buttons {
