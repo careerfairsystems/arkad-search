@@ -1,27 +1,23 @@
 "use strict"
 
-var pg = require('pg')
-let connectionString = "";
-if (process.env.NODE_ENV == "production") {
-    connectionString = process.env.DATABASE_URL;
-} else {
-    const user = process.env.PSQLUSER;
-    const pw = process.env.PSQLPW;
-    connectionString = 'postgres://'+user+':'+pw+'@localhost:5432/arkad-search';
-}
-var client = new pg.Client(connectionString);
-client.connect();
+const { Client, Pool } = require('pg');
 
-client.on('error', (err) => {
-    client.end();
-    client.connect();
+const pool = new Pool({
+    user: process.env.PSQL_USER,
+    host: process.env.PSQL_HOST,
+    database: process.env.PSQ_DB,
+    password: process.env.PSQL_PW,
+    port: 5432,
+});
+
+pool.on('error', (err, client) => {
     Raven.captureException(err);
-})
+});
 
 var database = {
 
     insert_search_into_database: function (name, time, date, info, callback) {
-        client.query('INSERT INTO data(name, time, date, info) VALUES($1, $2, $3, $4)',
+        pool.query('INSERT INTO data(name, time, date, info) VALUES($1, $2, $3, $4)',
             [name, time, date, info]
             , function (err, result) {
             if (err) return callback(err, null);
@@ -30,7 +26,7 @@ var database = {
     },
     
     read_entry: function (id, callback) {
-        client.query('SELECT * FROM data WHERE id = $1',
+        pool.query('SELECT * FROM data WHERE id = $1',
             [id]
             , function (err, result) {
             if (err) return callback(err, null);
@@ -39,7 +35,7 @@ var database = {
     },
     
     update_entry: function (ent, callback) {
-        client.query('UPDATE data SET name = $1, time = $2, date = $3, info = $4 WHERE id = $5',
+        pool.query('UPDATE data SET name = $1, time = $2, date = $3, info = $4 WHERE id = $5',
             [ent.name, ent.time, ent.date, ent.info, ent.id]
             , function (err, result) {
             if (err) return callback(err, null);
@@ -48,7 +44,7 @@ var database = {
     },
 
     delete_search: function (id, callback) {
-        client.query('DELETE FROM data WHERE id = $1',
+        pool.query('DELETE FROM data WHERE id = $1',
             [id]
             , function (err, result) {
                 if (err) return callback(err, null);
@@ -57,7 +53,7 @@ var database = {
     },
 
     get_user: function(username, callback) {
-        client.query('SELECT * FROM users where username = $1 ',
+        pool.query('SELECT * FROM users where username = $1 ',
             [username]
             , function (err, result) {
             if (err) return callback(err, null);
@@ -66,7 +62,7 @@ var database = {
     },
 
     add_user: function(username, password, callback) {
-        client.query('INSERT INTO users(username, password) VALUES($1, $2);',
+        pool.query('INSERT INTO users(username, password) VALUES($1, $2);',
             [username, password]
             , function (err, result) {
             if (err) return callback(err, null);
@@ -75,28 +71,28 @@ var database = {
     },
 
     read_everything_from_table: function (callback) {
-        client.query('SELECT * FROM data;', function (err, result) {
+        pool.query('SELECT * FROM data;', function (err, result) {
             if (err) return callback(err, null);
             return callback(null, result.rows)
         })
     },
 
     read_users_from_table: function (callback) {
-        client.query('SELECT username, admin FROM users;', function (err, result) {
+        pool.query('SELECT username, admin FROM users;', function (err, result) {
             if (err) return callback(err, null);
             return callback(null, result.rows)
         })
     },
 
     read_names_from_table: function (callback) {
-        client.query('SELECT name FROM data;', function (err, result) {
+        pool.query('SELECT name FROM data;', function (err, result) {
             if (err) return callback(err, null);
             return callback(null, result.rows)
         })
     },
 
     update_admin_permission: function (ent, callback) {
-        client.query('UPDATE users SET admin = $2 WHERE username = $1',
+        pool.query('UPDATE users SET admin = $2 WHERE username = $1',
             [ent.username, ent.admin]
             , function (err, result) {
             if (err) return callback(err, null);
@@ -105,7 +101,7 @@ var database = {
     },
 
     delete_user: function (ent, callback) {
-        client.query('DELETE FROM users WHERE username = $1',
+        pool.query('DELETE FROM users WHERE username = $1',
             [ent.username]
             , function (err, result) {
             if (err) return callback(err, null);
