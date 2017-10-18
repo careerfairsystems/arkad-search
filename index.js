@@ -9,6 +9,11 @@ var session = require('express-session');
 var bcrypt = require('bcrypt');
 var Raven = require('raven');
 
+/**
+ * Allows us to setup CORS
+ */
+var cors = require('cors')
+
 // Setting up Error Handling
 Raven.config(process.env.SENTRY_DSN).install();
 app.use(Raven.requestHandler());
@@ -169,7 +174,7 @@ app.post('/delete/:id', login, function(req, res) {
 });
 
 
-app.get('/arkad-search/:searchTerm', function(req,res){
+app.get('/arkad-search/:searchTerm', cors(), function(req,res){
     db.read_everything_from_table(function (err, result) {
         if (err) return throwError(err, res);
         var fuse = new Fuse(result, fuseOptions);
