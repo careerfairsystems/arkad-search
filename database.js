@@ -1,18 +1,27 @@
 "use strict"
 
-const { Client, Pool } = require('pg');
+const { Pool } = require('pg');
 
-const pool = new Pool({
-    user: process.env.PSQL_USER,
-    host: process.env.PSQL_HOST,
-    database: process.env.PSQ_DB,
-    password: process.env.PSQL_PW,
-    port: 5432,
-});
+// Connect to database
+let pool = undefined
+if(process.env.NODE_ENV === 'production') {
+    const connectionString = process.env.DATABASE_URL
+    pool = new Pool({ connectionString: connectionString })
 
-pool.on('error', (err, client) => {
-    Raven.captureException(err);
-});
+    // Setup error logging in production only
+    pool.on('error', (err, client) => {
+        Raven.captureException(err);
+    });
+}
+else {
+    pool = new Pool({
+        user: process.env.PSQL_USER,
+        host: process.env.PSQL_HOST,
+        database: process.env.PSQ_DB,
+        password: process.env.PSQL_PW,
+        port: 5432,
+    });
+}
 
 var database = {
 
