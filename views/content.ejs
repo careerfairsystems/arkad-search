@@ -20,7 +20,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-10 col-md-offset-1">
             <div class="page-header">
                 <div class="header-container">
                     <h1>Content for ARKAD search</h1>
@@ -31,6 +31,7 @@
                 <thead>
                     <tr>
                         <th>Name:</th>
+                        <th>Date:</th>
                         <th>Time:</th>
                         <th>Info:</th>
                     </tr>
@@ -39,6 +40,16 @@
                     for (var i=0; i < dbcontent.length; i++) { %>
                     <tr>
                         <td><%= dbcontent[i].name %></td>
+                        <td><% 
+                            function convert(str) {
+                                var date = new Date(str),
+                                    mnth = ('0' + (date.getMonth() + 1)).slice(-2),
+                                    day  = ('0' + date.getDate()).slice(-2);
+                                return [ date.getFullYear(), mnth, day ].join('-');
+                            }
+                            %>
+                            <%= convert(dbcontent[i].date) %>
+                        </td>
                         <td><%= dbcontent[i].time %></td>
                         <td>
                             <textarea readonly class="form-control" rows="1" id="textArea" style = "resize:none"><%= dbcontent[i].info %></textarea>
