@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS data(
-    id      integer NOT NULL,
+    id      serial NOT NULL,
     name    VARCHAR,
     time    time without time zone,
     date    date,
