@@ -20,11 +20,12 @@ app.use(Raven.requestHandler());
 app.use(Raven.errorHandler());
 // Optional fallthrough error handler
 function throwError(err, res) {
+    if (process.env.NODE_ENV !== 'production') console.log(err);
     Raven.captureException(err);
     return res.render('error');
 }
 
-const saltRounds = 10;
+const saltRounds = (process.env.NODE_ENV === 'production') ? 10 : 4;
 
 app.use(express.static(__dirname + '/views'));
 

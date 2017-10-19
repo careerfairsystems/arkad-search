@@ -1,8 +1,10 @@
 CREATE TABLE IF NOT EXISTS data(
+    id      integer NOT NULL,
     name    VARCHAR,
-    time    time,
+    time    time without time zone,
     date    date,
-    info    TEXT
+    info    TEXT,
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE IF  NOT EXISTS users(

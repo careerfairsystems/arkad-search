@@ -14,7 +14,6 @@ if(process.env.NODE_ENV === 'production') {
     });
 } else {
     const connectionString = 'postgres://' + process.env.PSQL_USER + ':' + process.env.PSQL_PW + '@localhost:5432/arkad-search';
-    console.log(connectionString);
     pool = new Pool({ connectionString: connectionString });
 }
 
