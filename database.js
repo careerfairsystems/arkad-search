@@ -112,6 +112,15 @@ var database = {
         })
     },
 
+    insert_search_query: function (query, callback) {
+        pool.query('INSERT INTO searchqueries (query) VALUES($1)',
+            [query]
+            , function(err, result) {
+            if (err) return callback(err, null);
+            return callback(null, result);
+        });
+    }
+
 };
 
 module.exports = database;

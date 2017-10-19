@@ -12,3 +12,8 @@ CREATE TABLE IF  NOT EXISTS users(
     username    VARCHAR(255)    UNIQUE,
     password    VARCHAR(1000)   UNIQUE
 );
+
+CREATE TABLE IF NOT EXISTS searchqueries(
+    query       VARCHAR(255),
+    timeofquery timestamp DEFAULT CURRENT_TIMESTAMP
+);

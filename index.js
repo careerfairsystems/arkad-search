@@ -179,6 +179,9 @@ app.get('/arkad-search/:searchTerm', cors(), function(req,res){
     db.read_everything_from_table(function (err, result) {
         if (err) return throwError(err, res);
         var fuse = new Fuse(result, fuseOptions);
+        db.insert_search_query(req.params.searchTerm, function(err, result) {
+            if (err) return throwError(err, res);
+        });
         res.json(fuse.search(req.params.searchTerm));
     })
 });
