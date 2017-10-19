@@ -7,20 +7,15 @@ let pool = undefined
 if(process.env.NODE_ENV === 'production') {
     const connectionString = process.env.DATABASE_URL
     pool = new Pool({ connectionString: connectionString })
-
+    
     // Setup error logging in production only
     pool.on('error', (err, client) => {
         Raven.captureException(err);
     });
-}
-else {
-    pool = new Pool({
-        user: process.env.PSQL_USER,
-        host: process.env.PSQL_HOST,
-        database: process.env.PSQ_DB,
-        password: process.env.PSQL_PW,
-        port: 5432,
-    });
+} else {
+    const connectionString = 'postgres://' + process.env.PSQL_USER + ':' + process.env.PSQL_PW + '@localhost:5432/arkad-search';
+    console.log(connectionString);
+    pool = new Pool({ connectionString: connectionString });
 }
 
 var database = {
