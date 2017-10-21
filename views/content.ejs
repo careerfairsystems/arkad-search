@@ -54,12 +54,16 @@
                         <td>
                             <textarea readonly class="form-control" rows="1" id="textArea" style = "resize:none"><%= dbcontent[i].info %></textarea>
                         </td>
-                        <td class="entry-buttons">
+                        <td>
                             <form class="form-style" method="get" action="/edit/<%= dbcontent[i].id %>">
-                                <button type="submit" class="btn btn-primary">edit</button>
+                                <button class="icon-button" type="submit">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </button>
                             </form>
-                            <form class="form-style" method="post" action="/delete/<%= dbcontent[i].id %>">
-                                <button type="submit" class="btn btn-danger">delete</button>
+                            <form class="form-style" onclick="deleteSearchAlert('<%= dbcontent[i].id %>')">
+                                <button class="icon-button" type="submit">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
                             </form>
                         </td>
                     </tr>
@@ -69,4 +73,21 @@
         </div>
     </div>
 </body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    function deleteSearchAlert(id) {
+        if(confirm("Delete search?")){
+            $.post("/delete/" + id,
+            {
+                searchId: id
+            },
+            function(data, status){
+                if(data.redirect){
+                    window.location.href = data.redirect;
+                }
+            });
+        }
+    }
+</script>
 </html>

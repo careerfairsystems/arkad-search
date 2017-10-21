@@ -6,6 +6,11 @@
 
 :host {
 }
+
+button:focus {outline:0;}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
 /* still need some rem/em converting*/
 /*Shine*/
 
@@ -130,10 +135,14 @@ button#activate:hover {
   color: #454545;
 }
 
-.entry-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.icon-button {
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+}
+
+.icon-button:hover {
+  color: #aaa;
 }
 
 .form-style {
@@ -143,4 +152,10 @@ button#activate:hover {
 
 .page {
   text-align: center;
+}
+
+td {
+  display: table-cell;
+  text-align: start;
+  vertical-align: middle !important;
 }

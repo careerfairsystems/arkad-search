@@ -168,9 +168,9 @@ app.post('/edit/:id', login, function(req, res) {
 });
 
 app.post('/delete/:id', login, function(req, res) {
-    db.delete_search(req.params.id, function(err, result) {
+    db.delete_search(req.body.searchId, function(err, result) {
         if (err) return throwError(err, res);
-        return res.redirect('/content');
+        return res.json({redirect: '/content'});
     });
 });
 
