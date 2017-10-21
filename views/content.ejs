@@ -31,28 +31,31 @@
                 <thead>
                     <tr>
                         <th>Name:</th>
-                        <th>Date:</th>
-                        <th>Time:</th>
+                        <th>Date/Time:</th>
                         <th>Info:</th>
                     </tr>
                 </thead>
                 <% if (dbcontent) {
                     for (var i=0; i < dbcontent.length; i++) { %>
                     <tr>
-                        <td><%= dbcontent[i].name %></td>
-                        <td><% 
-                            function convert(str) {
-                                var date = new Date(str),
-                                    mnth = ('0' + (date.getMonth() + 1)).slice(-2),
-                                    day  = ('0' + date.getDate()).slice(-2);
-                                return [ date.getFullYear(), mnth, day ].join('-');
-                            }
-                            %>
-                            <%= convert(dbcontent[i].date) %>
-                        </td>
-                        <td><%= dbcontent[i].time %></td>
                         <td>
-                            <textarea readonly class="form-control" rows="1" id="textArea" style = "resize:none"><%= dbcontent[i].info %></textarea>
+                            <p class="entity-title"><%= dbcontent[i].name %></p>
+                        </td>
+                        <td>
+                            <p class="entity-date"><% 
+                                function convert(str) {
+                                    var date = new Date(str),
+                                        mnth = ('0' + (date.getMonth() + 1)).slice(-2),
+                                        day  = ('0' + date.getDate()).slice(-2);
+                                    return [ date.getFullYear(), mnth, day ].join('-');
+                                }
+                                %>
+                                <%= convert(dbcontent[i].date) %>
+                            </p>
+                            <p class="entity-time"><%= dbcontent[i].time %></p>
+                        </td>
+                        <td>
+                            <p class="entity-info"><%= dbcontent[i].info %></p>
                         </td>
                         <td>
                             <form class="form-style" method="get" action="/edit/<%= dbcontent[i].id %>">

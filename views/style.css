@@ -159,3 +159,34 @@ td {
   text-align: start;
   vertical-align: middle !important;
 }
+
+.entity-title {
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-weight: bold;
+}
+
+.entity-time,
+.entity-date {
+  margin: 0;
+  min-width: 80px;
+  max-width: 80px;
+}
+
+.entity-info {
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  color: #737373;
+}
+
+@media (max-width: 600px) {
+  .entity-title {
+    max-width: 50px;
+  }
+}
