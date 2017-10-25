@@ -121,8 +121,8 @@ app.post('/search', login, function(req, res) {
     if (req.body.title != "") {
         var createEvent = {
             "Name": req.body.name,
-            "Time": req.body.time,
-            "Date": req.body.date,
+            "Time": req.body.time ? req.body.time : '00:00',
+            "Date": req.body.date ? req.body.date : '01/01/0001',
             "Info": req.body.info
         }
         db.insert_search_into_database(createEvent.Name,createEvent.Time,createEvent.Date,createEvent.Info, function(err, result){
