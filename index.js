@@ -8,6 +8,14 @@ var fuseOptions = require('./fuse-option.json');
 var session = require('express-session');
 var bcrypt = require('bcrypt');
 var Raven = require('raven');
+var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
+
+// Don't redirect if the hostname is `localhost:port` or the route is `/insecure`
+app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/]));
+
+app.get('/insecure', function (req, res) {
+    res.send('This page is not secure, try reconnecting with https.');
+});
 
 /**
  * Allows us to setup CORS
